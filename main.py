@@ -5,13 +5,11 @@ import time
 from langchain import OpenAI
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-# from langchain.document_loaders import UnstructuredURLLoader
 from langchain_community.document_loaders import UnstructuredURLLoader
-# from langchain.embeddings import OpenAIEmbeddings
 from langchain_community.embeddings import OpenAIEmbeddings
-# from langchain.vectorstores import FAISS
 from langchain_community.vectorstores import FAISS
 
+OPENAI_API_KEY='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'
 from dotenv import load_dotenv
 load_dotenv()  # take environment variables from .env (especially openai api key)
 
@@ -27,7 +25,7 @@ process_url_clicked = st.sidebar.button("Process URLs")
 file_path = "faiss_store_openai.pkl"
 
 main_placeholder = st.empty()
-llm = OpenAI(temperature=0.9, max_tokens=500)
+llm = OpenAI(temperature=0.9, max_tokens=500,api_key=OPENAI_API_KEY)
 
 if process_url_clicked:
     # load data
@@ -42,7 +40,7 @@ if process_url_clicked:
     main_placeholder.text("Text Splitter...Started...✅✅✅")
     docs = text_splitter.split_documents(data)
     # create embeddings and save it to FAISS index
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
     vectorstore_openai = FAISS.from_documents(docs, embeddings)
     main_placeholder.text("Embedding Vector Started Building...✅✅✅")
     time.sleep(2)
