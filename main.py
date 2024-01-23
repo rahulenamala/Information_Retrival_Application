@@ -9,9 +9,7 @@ from langchain_community.document_loaders import UnstructuredURLLoader
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 
-OPENAI_API_KEY='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'
-from dotenv import load_dotenv
-load_dotenv()  # take environment variables from .env (especially openai api key)
+OPENAI_API_KEY='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'
 
 st.title("RahulBot: News Research Tool ")
 st.sidebar.title("News Article URLs")
@@ -30,19 +28,19 @@ llm = OpenAI(temperature=0.9, max_tokens=500,api_key=OPENAI_API_KEY)
 if process_url_clicked:
     # load data
     loader = UnstructuredURLLoader(urls=urls)
-    main_placeholder.text("Data Loading...Started...✅✅✅")
+    main_placeholder.text("Data Loading...Started...")
     data = loader.load()
     # split data
     text_splitter = RecursiveCharacterTextSplitter(
         separators=['\n\n', '\n', '.', ','],
         chunk_size=1000
     )
-    main_placeholder.text("Text Splitter...Started...✅✅✅")
+    main_placeholder.text("Text Splitter...Started...")
     docs = text_splitter.split_documents(data)
     # create embeddings and save it to FAISS index
     embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
     vectorstore_openai = FAISS.from_documents(docs, embeddings)
-    main_placeholder.text("Embedding Vector Started Building...✅✅✅")
+    main_placeholder.text("Embedding Vector Started Building...")
     time.sleep(2)
 
     # Save the FAISS index to a pickle file
