@@ -9,7 +9,7 @@ To ensure accurate and insightful results, the tool leverages a combination of w
 ## Approach
 
 ###  User Input
-#### User provides URLs:
+
 Users input article URLs.
 
 Data Splitting and Storage
