@@ -9,7 +9,7 @@ from langchain_community.document_loaders import UnstructuredURLLoader
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 
-OPENAI_API_KEY='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'
+OPENAI_API_KEY='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'
 
 st.title("RahulBot: News Research Tool ")
 st.sidebar.title("News Article URLs")
