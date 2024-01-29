@@ -1,26 +1,32 @@
 import os
 import streamlit as st
-import pickle
+import dill as pickle
+# import dill 
+import sqlite3
+import json
 import time
 from langchain import OpenAI
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import UnstructuredURLLoader
 from langchain_community.embeddings import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
+# from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import Chroma
 
-OPENAI_API_KEY='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'
+OPENAI_API_KEY='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'
 
-st.title("RahulBot: News Research Tool ")
-st.sidebar.title("News Article URLs")
+
+st.title("RahulBot")
+st.sidebar.title("URLs")
 
 urls = []
 for i in range(3):
     url = st.sidebar.text_input(f"URL {i+1}")
     urls.append(url)
 
-process_url_clicked = st.sidebar.button("Process URLs")
+process_url_clicked = st.sidebar.button("Insert URLs")
 file_path = "faiss_store_openai.pkl"
+
 
 main_placeholder = st.empty()
 llm = OpenAI(temperature=0.9, max_tokens=500,api_key=OPENAI_API_KEY)
@@ -37,16 +43,18 @@ if process_url_clicked:
     )
     main_placeholder.text("Text Splitter...Started...")
     docs = text_splitter.split_documents(data)
-    # create embeddings and save it to FAISS index
+    # create embeddings and save it to chroma index
     embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
-    vectorstore_openai = FAISS.from_documents(docs, embeddings)
+    vectorstore_openai = Chroma.from_documents(docs, embeddings)
     main_placeholder.text("Embedding Vector Started Building...")
     time.sleep(2)
+    
 
-    # Save the FAISS index to a pickle file
     with open(file_path, "wb") as f:
         pickle.dump(vectorstore_openai, f)
+    
 
+ 
 query = main_placeholder.text_input("Question: ")
 if query:
     if os.path.exists(file_path):
@@ -65,3 +73,6 @@ if query:
                 sources_list = sources.split("\n")  # Split the sources by newline
                 for source in sources_list:
                     st.write(source)
+
+
+
