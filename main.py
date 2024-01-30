@@ -13,7 +13,7 @@ from langchain_community.embeddings import OpenAIEmbeddings
 # from langchain_community.vectorstores import FAISS
 from langchain_community.vectorstores import Chroma
 
-OPENAI_API_KEY='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'
+OPENAI_API_KEY='API Key'
 
 
 st.title("RahulBot")
