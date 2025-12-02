@@ -1,4 +1,4 @@
-# Information_Retrival_Application
+# Information Retrival Application
 
 ## Problem Statement
 In the ever-evolving world, staying informed is crucial for making decisions. However, accessing relevant and up-to-date information can be time-consuming and overwhelming. This Tool aims to address this problem by providing users with an effortless way to retrieve valuable insights from the articles.
